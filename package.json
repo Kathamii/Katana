@@ -1,0 +1,27 @@
+{
+  "name": "Katana",
+  "version": "0.0.0",
+  "description": "Web-Engineering Projekt",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kathamii/Katana.git"
+  },
+  "author": "Katharina-Maria Heer, Emil Bentel, André Harbrecht",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kathamii/Katana/issues"
+  },
+  "homepage": "https://github.com/Kathamii/Katana#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "jsonfile": "^3.0.0",
+    "jsonwebtoken": "^7.4.1",
+    "mongodb": "^2.2.30"
+  }
+}
+
