@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
-var userfile = './db/user.json';
-let user = require('../db/user.json');
+var userfile = './data/user.json';
+let user = require('../data/user.json');
 
 exports.login = function (req, res) {
    
@@ -44,7 +44,7 @@ exports.changePassword = function (req, res) {
         return;
     }
 
-    //Passwort ändern
+    //Passwort ï¿½ndern
     user.password = req.body.newPassword;
 
 
