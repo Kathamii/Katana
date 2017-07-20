@@ -30,14 +30,14 @@ exports.postentry = function (req, res) {
     }
 
     // nächsten freien Index suchen
-    var newIndex = blog.length;
-    while (blog.filter((element) => { return element.index == newIndex }).length > 0) {
-        newIndex += 1;
+    var index = blog.length;
+    while (blog.filter((element) => { return element.index == index }).length > 0) {
+        index += 1;
     }
 
-    var newBlogPost = {
+    var blogpost = {
         _id: new ObjectID(),
-        index: newIndex,
+        index: index,
         title: req.body.title,
         picture: req.body.picture,
         author: req.body.author,
@@ -47,13 +47,13 @@ exports.postentry = function (req, res) {
         tags: req.body.tags
     };
 
-    blog.push(newBlogPost);
+    blog.push(blogpost);
 
     fs.writeFile('./data/blog.json', JSON.stringify(blog), 'utf-8', (err) => {
         if (err) {
             res.status(400).json({ error: err });
         } else {
-            res.status(201).json({ index: newIndex, id: newBlogPost._id });
+            res.status(201).json({ index: index, id: blogpost._id });
         }
     });
 
