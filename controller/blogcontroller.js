@@ -1,5 +1,6 @@
 var blog = require('../data/blog.json');
 var ObjectID = require('mongodb').ObjectID;
+var fs = require('fs');
 
 
 exports.getblogentrys = function (req, res) {
@@ -16,6 +17,45 @@ exports.getblogentrys = function (req, res) {
 };
 
 exports.postentry = function (req, res) {
+
+
+    if (!res.locals.authenticated) {
+        res.status(401).send();
+        return;
+    }
+
+    if (!req.body.title || !req.body.picture || !req.body.author || !req.body.about || !req.body.released || !req.body.hidden || !req.body.tags) {
+        res.status(400).send();
+        return;
+    }
+
+    // nächsten freien Index suchen
+    var newIndex = blog.length;
+    while (blog.filter((element) => { return element.index == newIndex }).length > 0) {
+        newIndex += 1;
+    }
+
+    var newBlogPost = {
+        _id: new ObjectID(),
+        index: newIndex,
+        title: req.body.title,
+        picture: req.body.picture,
+        author: req.body.author,
+        about: req.body.about,
+        released: req.body.released,
+        hidden: req.body.hidden,
+        tags: req.body.tags
+    };
+
+    blog.push(newBlogPost);
+
+    fs.writeFile('./data/blog.json', JSON.stringify(blog), 'utf-8', (err) => {
+        if (err) {
+            res.status(400).json({ error: err });
+        } else {
+            res.status(201).json({ index: newIndex, id: newBlogPost._id });
+        }
+    });
 
 
 
