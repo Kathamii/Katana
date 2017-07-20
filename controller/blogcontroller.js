@@ -29,7 +29,7 @@ exports.postentry = function (req, res) {
         return;
     }
 
-    // nächsten freien Index suchen
+    // nï¿½chsten freien Index suchen
     var index = blog.length;
     while (blog.filter((element) => { return element.index == index }).length > 0) {
         index += 1;
@@ -63,10 +63,7 @@ exports.postentry = function (req, res) {
 
 exports.getblogentrybyid = function (req, res) {
 
-    if (!res.locals.authenticated && blog[req.params.id].hidden) {
-        res.status(401).send();
-        return;
-    }
+
     if (!blog[req.params.id]) {
         res.status(403).json
          (
@@ -74,6 +71,13 @@ exports.getblogentrybyid = function (req, res) {
                 message: 'ID not found!'
             }
          );
+        return;
+    }
+
+        if (!res.locals.authenticated && blog[req.params.id].hidden) {
+        res.status(401).json
+        ({message: 'Blog Entry is hidden'});
+        
         return;
     }
     res.json(blog[req.params.id]);
