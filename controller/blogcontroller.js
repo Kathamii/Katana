@@ -5,13 +5,14 @@ var fs = require('fs');
 
 exports.getblogentrys = function (req, res) {
 
+
     if (res.locals.authenticated)
     {
         res.json(blog);
     } else
     {
         res.json(blog.filter((element) => {
-            return !element.hidden;
+            return !element.hidden; 
         }));
     }
 };
@@ -29,7 +30,7 @@ exports.postentry = function (req, res) {
         return;
     }
 
-    // n�chsten freien Index suchen
+    // naechsten freien Index suchen
     var index = blog.length;
     while (blog.filter((element) => { return element.index == index }).length > 0) {
         index += 1;

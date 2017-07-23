@@ -11,19 +11,18 @@ exports.login = function (req, res) {
         res.status(401).json
          (
             {
-            message: 'Invalid Username or Password!' + req.body.username
+            message: 'Invalid Username or Password!  Username:' + req.body.username
             }
          );
        return;
     }
     else {
-
-    //Wenn alles passt, Token generieren und schicken
-    var token = jwt.sign(user, 'KatanasSignature', {
-        //expires: 86400
-    });
-
-    res.status(200).json({ 'token': token });
+        var username = req.body.username
+        var token = jwt.sign({user: username}, 'secretKey')
+        res.json({
+            message: 'Authenticated! Use this token in the "Authorization" header Username = ' + username ,
+            token: token        
+        });
     }
     
 };
