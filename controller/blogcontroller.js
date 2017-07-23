@@ -26,7 +26,7 @@ exports.postentry = function (req, res) {
     }
 
     if (!req.body.title || !req.body.picture || !req.body.author || !req.body.about || !req.body.released || !req.body.hidden || !req.body.tags) {
-        res.status(400).send();
+        res.status(400).json({message: 'Nicht alles da' + req.body.title + req.body.picture + req.body.author + req.body.about + req.body.released + req.body.hidden + req.body.tags});
         return;
     }
 

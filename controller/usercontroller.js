@@ -19,7 +19,7 @@ exports.login = function (req, res) {
     else {
         var username = req.body.username
         var token = jwt.sign({user: username}, 'secretKey')
-        res.json({
+        res.status(200).json({
             message: 'Authenticated! Use this token in the "Authorization" header Username = ' + username ,
             token: token        
         });
@@ -29,7 +29,10 @@ exports.login = function (req, res) {
 
 exports.changePassword = function (req, res) {
 
-
+      if (!res.locals.authenticated) {
+        res.status(403).send();
+        return;
+    }
 
     //Richtiges Passwort?
     if (req.body.password != user.password) {
@@ -39,17 +42,17 @@ exports.changePassword = function (req, res) {
         return;
     }
 
-    //Passwort �ndern
+    //Passwort ndern
     user.password = req.body.newPassword;
 
+        var token = jwt.sign({user}, 'secretKey')
 
-    //neuen Token ertsellen und senden
-    var token = jwt.sign(user, 'KatanasSignature', {
-
-    });
     fs.writeFile('./data/user.json', JSON.stringify(user), 'utf-8', (err) => {})
 
-    res.status(200).json({ 'token': token });
+        res.status(200).json({
+            message: 'Authenticated! Use this token in the "Authorization"',
+            token: token        
+        });
 
    
 
